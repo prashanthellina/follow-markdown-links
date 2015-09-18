@@ -3,10 +3,15 @@ from urlparse import urlparse
 from vim import *
 
 DEFAULT_EXTENSION = 'md'
+MAX_LINE_LEN = 1024
 
 def _extract_link_under_cursor():
     _, col = current.window.cursor
     line = current.line
+
+    # skip long lines to stop hogging CPU in vim
+    if len(line) >= MAX_LINE_LEN:
+        return
 
     # find the markdown link substring from line
     start_pos = line[:col].rfind("[")
