@@ -19,5 +19,5 @@ endOfPython
 endfunction
 
 command! FollowLink call FollowLink()
-nnoremap <script> <CR> :FollowLink<CR>
-nnoremap <script> <BS> :e#<CR>
+autocmd FileType markdown nnoremap <script> <CR> :FollowLink<CR>
+autocmd FileType markdown nnoremap <script> <BS> :e#<CR>
