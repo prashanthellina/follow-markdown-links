@@ -1,17 +1,18 @@
+import os
 import re
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
 
-from vim import *
+import vim
 
 DEFAULT_EXTENSION = 'md'
 MAX_LINE_LEN = 1024
 
 def _extract_link_under_cursor():
-    _, col = current.window.cursor
-    line = current.line
+    _, col = vim.current.window.cursor
+    line = vim.current.line
 
     # skip long lines to stop hogging CPU in vim
     if len(line) >= MAX_LINE_LEN:
@@ -34,7 +35,7 @@ def _is_local_link(link):
     return not link.netloc
 
 def _resolve_link(link):
-    buf_path = os.path.dirname(current.buffer.name)
+    buf_path = os.path.dirname(vim.current.buffer.name)
     return os.path.join(buf_path, link)
 
 def _ensure_extension(link):
@@ -67,7 +68,7 @@ def follow_link():
 
     # Open if exists
     if os.path.exists(link):
-        return command('e %s' % link)
+        return vim.command('e %s' % link)
 
     # Directory path does not exist. Ask user to create it.
     dirpath = os.path.dirname(link)
@@ -79,4 +80,4 @@ def follow_link():
         os.makedirs(dirpath)
 
     # Open as new file
-    return command('e %s' % link)
+    return vim.command('e %s' % link)
