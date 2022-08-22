@@ -34,5 +34,5 @@ endOfPython
 endif
 
 command! FollowLink call FollowLink()
-autocmd FileType markdown nnoremap <script> <CR> :FollowLink<CR>
-autocmd FileType markdown nnoremap <script> <BS> :e#<CR>
+nnoremap <script> <CR> :FollowLink<CR>
+nnoremap <script> <BS> :e#<CR>
